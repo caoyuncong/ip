@@ -1,4 +1,4 @@
-<%--
+<%@ page import="servlet.QueryServlet" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2017/6/10
@@ -9,48 +9,18 @@
 <html>
 <head>
     <title>$Title$</title>
-    <style>
-        * {
-            margin: 0 auto;
-        }
-
-        #counter {
-            background: gray;
-            height: 500px;
-        }
-
-        #logo {
-            font-size: 50px;
-            color: pink;
-            height: 200px;
-            background: yellow;
-        }
-
-        p {
-
-        }
-    </style>
 </head>
-<body>
-<%--<div id="counter">--%>
-<%--<div id="logo">--%>
-<%--<p>IP SEARCH</p>--%>
-<%--</div>--%>
-
-<%--</div>--%>
-<form action="index" method="post">
+<body onload="ip()">
+<form id="form" action="ip" method="post">
     <input type="text" name="ip" placeholder="请输入要查询的ip地址">
     <input type="submit" value="查询">
 </form>
-<br>
+${sessionScope.geo}
 <%
-    String ip = request.getParameter("ip");
-    if (ip != null) {
-        out.print(ip);
-    }
-    String message = (String) request.getAttribute("message");
-    if (message != null) {
-        out.print(message);
+    if (session.getAttribute("geo") == null) {
+        String ip = request.getRemoteAddr();
+        out.print(ip + "<br>");
+        out.print(QueryServlet.getGeo(ip));
     }
 %>
 </body>
